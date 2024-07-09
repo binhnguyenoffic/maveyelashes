@@ -1,0 +1,14 @@
+<p><img style="max-width: 250px" src="{{ 'logo.jpg' | asset_url }}" alt="" /></p>
+<!-- Main menu -->
+{% for link in linklists.main-menu.links %}
+  {{ link.title | link_to: link.url }}
+{% endfor %}
+
+<form action="{{ routes.search_url }}">
+  <input type="text"
+    placeholder="Search"
+    name="q"
+    value="{{ search.terms | escape }}"
+ >
+  <input type="submit" value="Search">
+</form>

@@ -1,0 +1,18 @@
+<!-- templates/customers/login.liquid -->
+{% layout none %}
+{% form 'customer_login' %}
+  <div>
+    <label for="CustomerEmail">Email</label>
+    <input type="email" name="customer[email]" id="CustomerEmail" autocorrect="off" autocapitalize="off">
+  </div>
+  <div>
+    <label for="CustomerPassword">Mật khẩu</label>
+    <input type="password" name="customer[password]" id="CustomerPassword">
+  </div>
+  <div>
+    <input type="submit" value="Đăng nhập">
+  </div>
+{% endform %}
+
+<a href="/account/register">Tạo tài khoản</a>
+<a href="/account/recover">Quên mật khẩu?</a>

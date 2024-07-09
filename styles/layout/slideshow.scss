@@ -1,0 +1,108 @@
+.slide {
+    text-align: center;
+    position: relative
+  }
+  .slideshow-container {
+    width: 100%;
+    margin: auto;
+    position: relative;
+  }
+  .collection {
+    &-content{
+        position:absolute;
+        top: 50%;
+        width: 100%;
+        &--link{
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 20px;
+            padding: 10px;
+            background-color: #c13121;
+        }
+    }
+    &-link{
+        display: block;   
+    }
+    &-image{
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        margin: 0 auto; 
+    }
+  }
+  .slider{
+    &-controls{
+        text-align: center;
+        margin-top: 10px;
+        button{
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    }
+    &-dots{
+        display: inline-block;
+        margin: 0 10px;
+    }
+    &-item{
+        position: relative;
+        display: flex;
+        width: 100% !important;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;  
+        &--controls{
+            right: 4px;
+            position: absolute;
+        }
+        &--dots{
+            display: flex;
+        }
+    }
+    &-pause{
+        background: #fff;
+        border: navajowhite;
+        color: #c13121;
+    }
+  }
+
+  .homepage-slider--img{
+    width: 100%
+  }
+  .slick{
+    &-dots{
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        li{
+            margin: 0 15px;
+            color: #c13121;
+            font-size: 25px;
+            button{
+                display: none ;
+            }
+        }
+    }
+    &-active{
+        color: #000 !important;
+    }
+  }
+
+  .prev{
+    margin: 0 27px;
+    background: transparent;
+    border: none;
+    color: #c13121;
+    cursor: pointer;
+   }
+   .next{
+    background: transparent;
+    border: none;
+    color: #c13121;
+    cursor: pointer;
+   }

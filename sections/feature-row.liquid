@@ -1,0 +1,238 @@
+<div class="contactus-section">
+  <div class="contactus-content">
+    <div class="contactus-image-wrapper">
+      <img
+        class="contactus-image"
+        src="{{ section.settings.image | img_url: 'medium' }}"
+        alt="{{ section.settings.image_alt_text }}"
+      >
+    </div>
+    <div class="contactus-info">
+      <h2 class="contactus-heading">{{ section.settings.contact_heading }}</h2>
+      <p class="contactus-text">Email: {{ section.settings.email -}}</p>
+      <p class="contactus-desc"><strong>Connect with us:</strong></p>
+      <p class="contactus-item">
+        <a class="contactus-item--link" href="{{ section.settings.instagram_url }}">Instagram</a> -
+        <a class="contactus-item--link" href="{{ section.settings.instagram_url }}" target="_blank">
+          {{- section.settings.email -}}
+        </a>
+      </p>
+      <p class="contactus-item">
+        <a class="contactus-item--link" href="{{ section.settings.facebook_url }}">Facebook</a> -
+        <a class="contactus-item--link" href="{{ section.settings.facebook_url }}" target="_blank">
+          {{- section.settings.facebook_name -}}
+        </a>
+      </p>
+      <p class="contactus-item">
+        <a class="contactus-item--link" href="{{ section.settings.youtube_url }}">YouTube</a> -
+        <a class="contactus-item--link" href="{{ section.settings.youtube_url }}" target="_blank">
+          {{- section.settings.youtube_name -}}
+        </a>
+      </p>
+      <p class="contactus-item">
+        <a class="contactus-item--link" href="{{ section.settings.tiktok_url }}">TikTok</a> -
+        <a class="contactus-item--link" href="{{ section.settings.tiktok_url }}" target="_blank">
+          {{- section.settings.tiktok_name -}}
+        </a>
+      </p>
+      <p class="contactus-item">
+        <a class="contactus-item--link" href="{{ section.settings.instagram_url }}">Facebook Group</a> -
+        <a class="contactus-item--link" href="{{ section.settings.instagram_url }}" target="_blank">
+          {{- section.settings.email -}}
+        </a>
+      </p>
+      <p class="contactus-item">
+        <a class="contactus-item--link" href="{{ section.settings.facebook_group_url }}">Facebook Group</a> -
+        <a class="contactus-item--link" href="{{ section.settings.facebook_group_url }}" target="_blank">
+          {{- section.settings.facebook_group_name -}}
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
+<style>
+  .contactus-section {
+    padding: {{ section.settings.padding_top }}px {{ section.settings.padding_right }}px {{ section.settings.padding_bottom }}px {{ section.settings.padding_left }}px;
+    background-color: {{ section.settings.background_color }};
+  }
+  .contactus-desc{
+    font-size: {{ section.settings.font_size_connect }}px;
+  }
+  .contactus-item--link {
+    color: {{ section.settings.font_color }};
+    font-size: {{ section.settings.font_size }}px;
+    text-decoration: none;
+  }
+
+
+</style>
+{% schema %}
+{
+  "name": "Feature Row",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt_text",
+      "label": "Image Alt Text",
+      "default": "Contact Image"
+    },
+    {
+      "type": "text",
+      "id": "contact_heading",
+      "label": "Contact Heading",
+      "default": "Contact Information"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "example@example.com"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "instagram_name",
+      "label": "Instagram Name",
+      "default": "Instagram"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "facebook_name",
+      "label": "Facebook Name",
+      "default": "Facebook"
+    },
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "YouTube URL",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "youtube_name",
+      "label": "YouTube Name",
+      "default": "YouTube"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_url",
+      "label": "TikTok URL",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "tiktok_name",
+      "label": "TikTok Name",
+      "default": "TikTok"
+    },
+    {
+      "type": "url",
+      "id": "facebook_group_url",
+      "label": "Facebook Group URL",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "facebook_group_name",
+      "label": "Facebook Group Name",
+      "default": "Facebook Group"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Left Padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Right Padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font Size",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "font_size_connect",
+      "label": "Font Size Connect",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Font Color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature Row",
+      "category": "Custom",
+      "settings": {},
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,97 @@
+.contact-us {
+    .container{
+        max-width: 800px;
+    }
+}
+.breadcrumb{
+    &-nav{
+        margin-bottom: 20px; 
+    }
+    &-list{
+        display: $flex;
+        list-style: none;
+        padding: 0;
+        margin: 15px 0;
+    }
+    &-item{
+        margin-right: 10px;
+        a{
+            text-decoration: none;
+            color: #007bff;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+        &.active{
+            color: #555;
+        }
+    }
+}
+.title-and-description {
+    margin-bottom: 20px;
+}
+.contact{
+    &-info{
+        margin-bottom: 20px;
+        ul{
+            list-style: none;
+            padding: 0;
+            li{
+                margin-bottom: 5px;
+            }
+        }
+    }
+    &-form{
+        display: flex;
+        flex-direction: column;
+    }
+}
+.form{
+    &-blocks{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+    &-block{
+        width: 300px !important;
+        margin-bottom: 20px !important;
+        label{
+            display: block;
+            margin-bottom: 5px;
+        }
+        input , textarea{
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            max-width: 300px;
+            border: 1px solid #ccc;
+        }
+        textarea{
+            resize: vertical;
+            height: 300px;
+        }
+    }
+}
+.btn {
+    padding: 10px 20px !important;
+    font-size: 16px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    max-width: 320px !important;
+    text-transform: uppercase;
+  }
+
+   @media (max-width: 750px) {
+    .form-block{
+        width: 100% !important;
+    }
+    .btn{
+      max-width: 100% !important;
+    }
+    .form-block input, .form-block textarea{
+      max-width: 100%  !important;
+    }
+  }

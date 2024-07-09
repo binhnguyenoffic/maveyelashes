@@ -1,0 +1,173 @@
+<div class="collection">
+  <hr>
+  <div class="collection-breadcrumb">
+    <div class="breadcrumb-item">
+      <a class="breadcrumb-item_links" href="/">Home</a>
+    </div>
+    <div class="breadcrumb-item">
+      <i class="fa-solid fa-angle-right"></i>
+    </div>
+    <div class="breadcrumb-item">
+      <p class="heading-primary">{{ collection.title }}</p>
+    </div>
+  </div>
+  <div class="collection-select">
+    <h1 class="collection-select_title">{{ collection.title }}</h1>
+    <select id="sort-by">
+      {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+
+      {% for option in collection.sort_options %}
+        <option
+          value="{{ option.value }}"
+          {% if option.value == sort_by %}
+            selected="selected"
+          {% endif %}
+        >
+          {{ option.name }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="collection-product">
+    {% paginate collection.products by 10 %}
+      <div class="collection-product_list">
+        {% for product in collection.products %}
+          <div class="collection-product_item">
+            <a href="{{ product.url }}">
+              <img class="collection-product_img" src="{{ product.featured_image | product_img_url:'original' }}">
+            </a>
+            <h3 class="collection-product_title">{{ product.title | link_to: product.url }}</h3>
+            <p class="collection-product_desc">Kingdom Eyelashes</p>
+            {% assign current_variant = product.selected_or_first_available_variant %}
+            <div class="collection-product_price">
+              <span class="product-price__reg price-reg">
+                {{- current_variant.price | money_without_trailing_zeros -}}
+              </span>
+              {% if current_variant.compare_at_price > current_variant.price %}
+                <span class="product-price__sale price-sale"
+                  ><s>{{ current_variant.compare_at_price | money }}</s></span
+                >
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="collection_product-panigate">
+        {{ paginate | default_pagination }}
+      </div>
+    {% endpaginate %}
+  </div>
+</div>
+
+<script>
+  Shopify.queryParams = {};
+
+  // Preserve existing query parameters
+  if (location.search.length) {
+    var params = location.search.substr(1).split('&');
+
+    for (var i = 0; i < params.length; i++) {
+      var keyValue = params[i].split('=');
+
+      if (keyValue.length) {
+        Shopify.queryParams[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
+      }
+    }
+  }
+
+  // Update sort_by query parameter on select change
+  document.querySelector('#sort-by').addEventListener('change', function (e) {
+    var value = e.target.value;
+
+    Shopify.queryParams.sort_by = value;
+    location.search = new URLSearchParams(Shopify.queryParams).toString();
+  });
+</script>
+<style>
+    .collection-breadcrumb {
+      display: flex;
+      align-items: center;
+      font-size: 20px;
+    }
+    .breadcrumb-item_links {
+      color: #000 !important;
+      text-decoration: none !important;
+    }
+    .breadcrumb-item_links:hover {
+      color: #666 !important ;
+    }
+    .collection-select {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .collection-select_title {
+      margin: 0;
+    }
+    #sort-by {
+      padding: 10px;
+      outline: none;
+      border: none;
+    }
+    .collection-product_list{
+      margin: 15px 0;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      display: grid;
+      gap: 20px;
+    }
+    .collection-product_img{
+        width: 100%;
+    }
+    .collection-product_title{
+     margin: 0;
+    text-align: center;
+    font-size: 20px;
+    }
+    .collection-product_title a{
+        text-decoration: none;
+        font-size: 20px;
+        color: #000;
+    }
+    .collection-product_title a:hover{
+        color: #666;
+    }
+    .collection-product_desc{
+        text-align:center;
+        font-size: 19px;
+        margin: 10px 0;
+    }
+    .collection-product_price{
+        text-align: center;
+        font-size: 19px;
+    }
+    .product-price__reg{
+        color: #c13121;
+    }
+    .collection_product-panigate{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+    .page,.next,.prev{
+        padding: 5px 10px;
+        background: #000;
+        margin: 0 11px;
+        color: #fff;
+    }
+    .page a{
+        color: #fff;
+         text-decoration: none;
+    }
+    .next a{
+        color: #fff;
+        text-decoration: none;
+    }
+    .prev a{
+        color: #fff;
+        text-decoration: none;
+    }
+
+  }
+</style>

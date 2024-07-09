@@ -1,0 +1,48 @@
+{% if section.settings['announcement-bar'] and section.settings['announcement-bar'] != '' %}
+  <div class="announcement-bar">{{ section.settings['announcement-bar'] }}</div>
+
+  <style>
+    .announcement-bar{
+        font-family: {{section.settings.font-picker.family}};
+        font-size: {{section.settings.font-size}}px;
+        color: {{section.settings.font-color}};
+        background: {{section.settings.color_background}};
+    }
+  </style>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "class": "announcement-bar",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "announcement-bar",
+      "label": "Announcement Bar"
+    },
+    {
+      "type": "font_picker",
+      "id": "font-picker",
+      "label": "Font Family",
+      "default": "abel_n4"
+    },
+    {
+      "type": "number",
+      "id": "font-size",
+      "label": "Font Size",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "font-color",
+      "label": "Font Color"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background Color"
+    }
+  ]
+}
+{% endschema %}

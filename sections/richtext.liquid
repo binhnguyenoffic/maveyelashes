@@ -1,0 +1,330 @@
+<div class="richtext-section">
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'heading' -%}
+        <{{ block.settings.heading_tag }}
+          class="responsive-heading"
+          style="
+            text-align: {{ block.settings.heading_alignment }};
+            font-size: {{ block.settings.heading_font_size }}px;
+            color: {{ block.settings.heading_color }};
+            padding-top: {{ block.settings.heading_padding_top }}px;
+            padding-bottom: {{ block.settings.heading_padding_bottom }}px;
+          "
+        >
+          {{- block.settings.heading_content -}}
+        </{{ block.settings.heading_tag }}>
+      {%- when 'caption' -%}
+        <h2>{{ block.settings.caption_content }}</h2>
+      {%- when 'text' -%}
+        <div
+          class="richtext-text"
+          style="font-size: {{ block.settings.text_font_size }}px ; color: {{ block.settings.text_color }} "
+        >
+          {{ block.settings.text_content }}
+        </div>
+      {%- when 'button' -%}
+        <a
+          href="{{ block.settings.button_url }}"
+          class="button"
+          style="
+            background-color: {{ block.settings.button_background }};
+            color: {{ block.settings.button_text_color }};
+            padding: {{ block.settings.button_padding_top }}px {{ block.settings.button_padding_right }}px {{ block.settings.button_padding_bottom }}px {{ block.settings.button_padding_left }}px;
+            text-decoration: none;
+            cursor: pointer;
+          "
+        >
+          {{- block.settings.button_text -}}
+        </a>
+    {%- endcase -%}
+  {%- endfor -%}
+</div>
+
+<style>
+  {% comment %} .richtext-section {
+    padding: {{ section.settings.padding_top }}px {{ section.settings.padding_right }}px {{ section.settings.padding_bottom }}px {{ section.settings.padding_left }}px;
+  } {% endcomment %}
+  @media (max-width: 750px){
+    .responsive-heading{
+      text-align: center !important;
+    }
+    .richtext-text{
+      text-align: justify;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Richtext Section",
+  "class": "section-richtext",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Padding Left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Padding Right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading_content",
+          "label": "Heading Content",
+          "default": "Welcome to Our Website"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "Heading Tag",
+          "default": "h1",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "heading_alignment",
+          "label": "Heading Alignment",
+          "default": "left",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "heading_alignment_mobile",
+          "label": "Heading Alignment Mobile",
+          "default": "center",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "heading_font_size",
+          "label": "Heading Font Size",
+          "default": 20,
+          "min": 10,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "heading_padding_top",
+          "label": "Heading Padding Top",
+          "default": 10,
+          "min": 0,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id": "heading_padding_bottom",
+          "label": "Heading Padding Bottom",
+          "default": 10,
+          "min": 0,
+          "max": 100,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "type": "caption",
+      "name": "Caption",
+      "settings": [
+        {
+          "type": "text",
+          "id": "caption_content",
+          "label": "Caption Content",
+          "default": "Learn more about our services"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text_content",
+          "label": "Text Content",
+          "default": "<p>Enter your text here...</p>"
+        },
+        {
+          "type": "range",
+          "id": "text_font_size",
+          "label": "Font Size",
+          "default": 24,
+          "min": 10,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": " Text Color",
+          "default": "#ffffff"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Read More"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL",
+          "default": "/"
+        },
+        {
+          "type": "range",
+          "id": "button_padding_top",
+          "label": "Button Padding Top",
+          "default": 10,
+          "min": 0,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id": "button_padding_right",
+          "label": "Button Padding Right",
+          "default": 20,
+          "min": 0,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id": "button_padding_bottom",
+          "label": "Button Padding Bottom",
+          "default": 10,
+          "min": 0,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id": "button_padding_left",
+          "label": "Button Padding Left",
+          "default": 20,
+          "min": 0,
+          "max": 50,
+          "step": 1
+        },
+        {
+          "type": "color",
+          "id": "button_background",
+          "label": "Button Background Color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Richtext"
+    }
+  ]
+}
+{% endschema %}

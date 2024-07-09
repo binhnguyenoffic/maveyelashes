@@ -1,0 +1,16 @@
+<h1>Collections</h1>
+
+{% paginate collections by 4 %}
+  {% for collection in collections %}
+    <div>
+      {{ collection.title | link_to: collection.url }}
+      {% if collection.image %}
+        <img src="{{ collection.image | image_url: width: 450, height: 450 | image_tag: collection.image.alt }}">
+      {% else %}
+        <img src="{{ collection.featured_image | image_url: width: 450, height: 450 | image_tag: collection.featured_image.alt }}">
+      {% endif %}
+      <p>{{ collection.all_products_count }}</p>
+    </div>
+  {% endfor %}
+  {{ paginate | default_pagination }}
+{% endpaginate %}

@@ -1,0 +1,132 @@
+<div class="collection-grid">
+  {%- for block in section.blocks -%}
+    <div class="collection-item">
+      <a class="collection-item--link" href="{{block.settings.collection.url }}">
+        <img
+          class="collection-item--img"
+          src="{{ block.settings.collection.image.src | img_url: 'medium' }}"
+          alt="{{ block.settings.collection.title }}"
+        >
+        <h2 class="collection-item--title">{{ block.settings.collection.title }}</h2>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+<style>
+       {% comment %} Collection-grid {% endcomment %}
+     .collection-grid{
+      display: grid;
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+      gap: {{  section.settings.grid_gap}}px;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      padding-left: {{ section.settings.padding_left }}px;
+      padding-right: {{ section.settings.padding_right }}px;
+    }
+    @media (max-width: 750px){
+      .collection-grid{
+          grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr);
+          gap: 25px;
+        }
+  }
+</style>
+{% schema %}
+{
+  "name": "Collection List",
+  "settings": [
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Gap between grid items",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 25,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Number of columns on desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Number of columns on mobile",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Padding Left",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Padding Right",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    }
+  ],
+  "blocks": [
+    {
+      "type": "featured_collection",
+      "name": "featured_collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections_list",
+      "blocks": [
+        {
+          "type": "featured_collection"
+        },
+        {
+          "type": "featured_collection"
+        },
+        {
+          "type": "featured_collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

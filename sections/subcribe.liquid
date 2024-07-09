@@ -1,0 +1,45 @@
+<div class="subscribe-section">
+  <div class="subscribe-content">
+    {% form 'customer', class: 'subscribe-form' %}
+      <input type="email" name="customer[email]" id="Email" placeholder="Your email address" required>
+      <input type="submit" class="btn" value="{{ section.settings.button_text }}">
+    {% endform %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Subscribe Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Subscribe to our Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "form_action",
+      "label": "Form Action URL",
+      "default": "/subscribe"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email Placeholder",
+      "default": "Enter your email address"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Subscribe"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Subscribe"
+    }
+  ]
+}
+{% endschema %}

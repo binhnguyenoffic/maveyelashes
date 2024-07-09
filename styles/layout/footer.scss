@@ -1,0 +1,76 @@
+.connect{
+    &-content{
+        margin-top: 10px !important;
+    }
+    &-heading{
+        text-decoration: underline !important;
+    }
+}
+.footer{
+    &-container{
+        display: flex;
+        justify-content: space-between;
+    }
+    &-column{
+        flex: 1 0 25%;
+        min-width: 250px;
+        box-sizing: border-box;
+        h4{
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        ul,p,form{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+            color: #333;   
+        }
+        form {
+            input[type='email']{
+                width: 70%;
+                outline: none;
+                border: 0;
+                height: 48px;
+            }
+            button{
+                padding: 10px;
+                cursor: pointer;
+                border: 0;
+                outline: none;
+                background: #c13121;
+                color: #fff;
+                font-size: 15px;
+                text-transform: uppercase;
+            }
+        }
+    }
+}
+.know{
+    &-form{
+        display: flex;
+        .btn{
+            padding: 10px;
+            cursor: pointer;
+            border: 0;
+            outline: none;
+            background: #c13121;
+            color: #fff;
+            outline: none;
+            height: 48px;
+            font-size: 15px;
+            text-transform: uppercase;
+        }
+    }
+    &-heading{
+        margin-bottom: 10px !important;
+    }
+}
+
+@media (max-width: 750px){
+    .footer-container {
+        flex-direction: column;
+      }
+}

@@ -1,0 +1,29 @@
+.collection-item{
+    position: relative;
+    opacity: .8;
+    &:hover{
+        opacity: .45;
+    }
+    &--img{
+        width: 100%;
+        height: 100%;
+    }
+    &--title{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 30px;
+        font-weight: 400;
+        text-align: center;
+        width: 100%;
+        color: #fff;
+    }
+}
+@media (max-width: 750px){
+    .collection-grid{
+        display: $grid;
+      }
+      .collection-item--title {
+        font-size: 16px;
+      }
+}

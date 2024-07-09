@@ -1,0 +1,117 @@
+<div class="slideshow-collection-section">
+  <div class="slideshow-container">
+    {%- for block in section.blocks -%}
+      {%- assign collection = collections[block.settings.collection] -%}
+      <div class="slide">
+        <a href="{{ collection.url }}" class="collection-link">
+          <img
+            class="collection-image"
+            src="{{ collection.image | img_url: 'medium' }}"
+            alt="{{ collection.title }}"
+          >
+        </a>
+        <div class="collection-content">
+          <div class="collection-content--desc">
+            <a class="collection-content--link" href="{{collection.url }}">{{ collection.title }} </a>
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+  <div class="slider-item">
+    <div class="slider-item--dots">
+      <button class="prev"><i class="fas fa-chevron-left"></i></button>
+      <div class="slider-dots"></div>
+      <button class="next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="slider-item--controls">
+      <button class="slider-pause"><i class="fa-solid fa-pause"></i></button>
+    </div>
+  </div>
+</div>
+
+<style>
+  {% comment %} .slideshow-collection-section {
+    padding: {{ section.settings.padding_top }}px {{ section.settings.padding_right }}px {{ section.settings.padding_bottom }}px {{ section.settings.padding_left }}px;
+    background-color: {{ section.settings.background_color }};
+  } {% endcomment %}
+</style>
+
+{% schema %}
+{
+  "name": "Slideshow Collection",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Left Padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Right Padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_slide",
+      "name": "Collection Slide",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Slideshow Collection",
+      "category": "Custom",
+      "settings": {},
+      "blocks": [
+        {
+          "type": "collection_slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

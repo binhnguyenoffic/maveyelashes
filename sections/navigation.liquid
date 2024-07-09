@@ -1,0 +1,228 @@
+<div class="homepage-navigation ">
+  <div class="homepage-menu--icon">
+    <i class="fa-solid fa-bars"></i>
+  </div>
+  <ul class="homepage-navigation--menu">
+    {% for link in section.settings.navigation.links %}
+      <li class="navigation-link ">
+        <a class="navigation-link--item {% if link.current %}current{% endif %}" href="{{ link.url }}">
+          {{- link.title -}}
+        </a>
+        {% if link.links.size > 0 %}
+          <ul class="navigation dropdown-child">
+            {% for child_link in link.links %}
+              <li class="navigation-link">
+                <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                {% if child_link.links.size > 0 %}
+                  <ul class="navigation dropdown-grandchild">
+                    {% for grandchild_link in child_link.links %}
+                      <li class="navigation-link">
+                        <a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+    {% endfor %}
+    <div class="product-navigation">
+      <a href="{{ section.settings.navigation_share }}" class="product-icon_title"
+        ><i class="fa-brands fa-square-facebook"></i>
+      </a>
+      <a href="{{ section.settings.navigation_tweet }}" class="product-icon_title"
+        ><i class="fa-brands fa-twitter"></i>
+      </a>
+      <a href="{{ section.settings.navigation_pinit }}" class="product-icon_title"
+        ><i class="fa-brands fa-pinterest"></i
+      ></a>
+      <a href="{{ section.settings.navigation_instagram }}" class="product-icon_title"
+        ><i class="fa-brands fa-instagram"></i
+      ></a>
+      <a href="{{ section.settings.navigation_youtube }}" class="product-icon_title"
+        ><i class="fa-brands fa-youtube"></i
+      ></a>
+    </div>
+  </ul>
+</div>
+
+<style>
+       /* CSS for homepage navigation */
+    .homepage-navigation {
+      background-color: {{ section.settings.bg }};
+    }
+    .navigation-link {
+      display: inline-block;
+      padding: 10px;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      padding-left: {{ section.settings.padding_left }}px;
+      padding-right: {{ section.settings.padding_right }}px;
+    }
+
+    .navigation-link--item {
+      text-decoration: none;
+      color: {{ section.settings.nav_color }};
+      font-size: {{ section.settings.nav_font_size }};
+      text-align: {{ section.settings.text_align }};
+    }
+
+    .navigation-link {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+    .product-navigation{
+      display:flex;
+      align-items:center;
+      margin: 16px 0;
+    }
+    .product-icon_title {
+      margin-right: 15px;
+      text-decoration: none;
+      color: #000;
+  }
+  .product-icon_title i {
+    font-size: 20px;
+  }
+
+    @media (max-width: 750px) {
+      .homepage-navigation {
+        text-align: {{ section.settings.text_align }};
+      }
+      .navigation-link {
+        text-align: {{ section.settings.text_align }};
+      }
+      .product-navigation{
+        justify-content: center;
+        margin: 10px 0;
+      }
+
+    }
+</style>
+<script>
+  {% comment %} menu-navbar {% endcomment %}
+  document.addEventListener('DOMContentLoaded', function () {
+    var menuIcon = document.querySelector('.homepage-menu--icon');
+    var menu = document.querySelector('.homepage-navigation--menu');
+    var icon = menuIcon.querySelector('i');
+    menuIcon.addEventListener('click', function () {
+      menu.classList.toggle('active');
+      if (menu.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-close');
+      } else {
+        icon.classList.remove('fa-close');
+        icon.classList.add('fa-bars');
+      }
+    });
+  });
+</script>
+{% schema %}
+{
+  "name": "Navigation",
+  "tag": "header",
+  "class": "homepage",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Navigation Settings"
+    },
+    {
+      "type": "link_list",
+      "id": "navigation",
+      "label": "Navigation",
+      "default": "main-menu"
+    },
+    {
+      "type": "color",
+      "id": "nav_color",
+      "label": "Navigation_color",
+      "default": "#3c4049"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Navigation_background",
+      "default": "#fff"
+    },
+    {
+      "type": "text",
+      "id": "nav_font_size",
+      "label": "Navigation Font Size",
+      "default": "20px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Left",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Right",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "navigation_share",
+      "label": "Navigation Share",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "navigation_tweet",
+      "label": "Navigation Tweet",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "navigation_pinit",
+      "label": "Navigation Pin it",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "navigation_instagram",
+      "label": "Navigation instagram",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "navigation_youtube",
+      "label": "Navigation youtube",
+      "default": "/"
+    }
+  ]
+}
+{% endschema %}

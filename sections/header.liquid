@@ -1,0 +1,214 @@
+<div class="header">
+  <div class="header-top grid top-bar">
+    {% for block in section.blocks %}
+      {% if block.type == 'search-bar' %}
+        <div class="search-bar grid-item">
+          <form class="search-form" action="{{ routes.search_url }}">
+            <button class="search-form--submit" type="submit" value="Search">
+              {{ 'search-icon.svg' | asset_url | img_tag }}
+            </button>
+            <input
+              class="search-form--search-text"
+              type="text"
+              placeholder="Search"
+              name="q"
+              value="{{ search.terms | escape }}"
+            >
+          </form>
+        </div>
+      {% elsif block.type == 'navigation' %}
+        <div class="navigation grid-item">
+          <ul class="menu">
+            <li class="menu-link"><a class="menu-link--item" href="/account/login">Login</a></li>
+            <li class="menu-link"><a class="menu-link--item" href="/account/register">Sign up</a></li>
+            {% comment %}
+              {% for link in section.settings.navigation.links %}
+                <li class="menu-link">
+                  <a class="menu-link--item" href="{{ link.url }}">{{ link.title }}</a>
+                  {% if link.links.size > 0 %}
+                    <ul class="menu dropdown-child">
+                      {% for child_link in link.links %}
+                        <li class="menu-link">
+                          <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                          {% if child_link.links.size > 0 %}
+                            <ul class="menu dropdown-grandchild">
+                              {% for grandchild_link in child_link.links %}
+                                <li class="menu-link">
+                                  <a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                          {% endif %}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            {% endcomment %}
+          </ul>
+        </div>
+      {% elsif block.type == 'mini-cart' %}
+        <div class="mini-cart">
+          <a href="/cart" class="mini-cart--link">
+            {{ 'cart-icon.svg' | asset_url | img_tag }}
+            {% if cart.item_count > 0 %}
+              <span class="small--hide">
+                Cart (<span id="CartCount">{{ cart.item_count }}</span>)
+              </span>
+            {% else %}
+              <span class="small--hide"> Cart (<span id="CartCount">0</span>) </span>
+            {% endif %}
+          </a>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="header-bottom">
+    <hr class="hr--border">
+    <p class="header-bottom--img">
+      <img style="max-width: 250px" src="{{ section.settings.logo | img_url: 'master' }}" alt="{{site.name}}">
+    </p>
+  </div>
+</div>
+
+<style>
+   .search-form--search-text {
+     color: {{ section.settings.text_color }};
+   }
+   .navigation ul {
+     justify-content: {{ section.settings.menu_position }};
+   }
+   .mini-cart {
+     text-align: {{section.settings.mini_cart}};
+   }
+
+   .mini-cart--link {
+     font-size: {{ section.settings.nav_font_size }};
+     color: {{  section.settings.text_color}};
+   }
+   {% comment %} top bar {% endcomment %}
+   .top-bar{
+         background-color: {{ section.settings.bg }}
+    }
+    .menu-link--item{
+       color: {{section.settings.text_color}};
+       font-size: {{ section.settings.nav_font_size }};
+   }
+  {% comment %} navigtion {% endcomment %}
+  .homepage-navigation {
+    background-color: {{ section.settings.bg }};
+  }
+  .navigation-link--item {
+    text-decoration: none;
+    color: {{ section.settings.nav_color }};
+    font-size: {{ section.settings.nav_font_size }};
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+
+    {
+      "type": "select",
+      "id": "mini_cart",
+      "label": "Mini Cart",
+      "default": "right",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000"
+    },
+    {
+      "type": "link_list",
+      "id": "navigation",
+      "label": "Navigation",
+      "default": "main-menu"
+    },
+    {
+      "type": "select",
+      "id": "menu_position",
+      "label": "Menu Position",
+      "options": [
+        {
+          "value": "flex-end",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-start",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "nav_color",
+      "label": "Navigation_color",
+      "default": "#3c4049"
+    },
+    {
+      "type": "text",
+      "id": "nav_font_size",
+      "label": "Navigation Font Size",
+      "default": "20px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "search-bar",
+      "name": "Search Bar",
+      "settings": []
+    },
+    {
+      "type": "navigation",
+      "name": "Navigation",
+      "settings": []
+    },
+    {
+      "type": "mini-cart",
+      "name": "Mini Cart",
+      "settings": []
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Header"
+    }
+  ]
+}
+{% endschema %}

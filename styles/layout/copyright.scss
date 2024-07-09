@@ -1,0 +1,30 @@
+.copyright{
+    &-content{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap; 
+    }
+    &-text{
+        flex: 1 1 50%;
+        box-sizing: border-box;
+    }
+}
+.visa-images {
+    flex: 1 1 50%;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    img{
+        max-width: 50px;
+        margin: 10px;
+    }
+  }
+  @media (max-width: 750px) {
+    .copyright-text {
+      text-align: center;
+    }
+    .visa-images {
+        justify-content: center;
+    }
+  }

@@ -1,0 +1,422 @@
+<div class="footer-section">
+  <hr>
+  <div class="footer-container">
+    {% for block in section.blocks %}
+      <div class="footer-column">
+        {% case block.type %}
+          {% when 'links' %}
+            <h4 class="footer-heading" style="color: {{ section.settings.color_heading }}">
+              {{ block.settings.heading }}
+            </h4>
+            <div class="footer-menu grid-item">
+              <ul class="footer-menu" style="margin-top: {{ block.settings.links_margin_top }}px;">
+                {% for link in block.settings.navigation.links %}
+                  <li
+                    class="menu-link"
+                    style="
+                      padding-top: {{ block.settings.links_padding_top }}px;
+                      padding-bottom: {{ block.settings.links_padding_bottom }}px;
+                    "
+                  >
+                    <a
+                      style="
+                        font-size: {{ block.settings.font_size_links }}px;
+                        color: {{ block.settings.color_links }};
+                      "
+                      class="menu-link--item"
+                      href="{{ link.url }}"
+                    >
+                      {{- link.title -}}
+                    </a>
+                    {% if link.links.size > 0 %}
+                      <ul class="menu dropdown-child">
+                        {% for child_link in link.links %}
+                          <li class="menu-link">
+                            <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                            {% if child_link.links.size > 0 %}
+                              <ul class="menu dropdown-grandchild">
+                                {% for grandchild_link in child_link.links %}
+                                  <li class="menu-link">
+                                    <a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a>
+                                  </li>
+                                {% endfor %}
+                              </ul>
+                            {% endif %}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% when 'contact_us' %}
+            <h4
+              class="footer-heading"
+              style="color: {{ block.settings.color_heading }}; px"
+            >
+              {{ block.settings.heading }}
+            </h4>
+            <p>
+              <strong
+                style="
+                  font-size: {{ block.settings.font_size_contact }}px;
+                  margin-top: {{ block.settings.contact_margin_top }}px;
+                "
+              >
+                Email:
+              </strong>
+              <br>
+              <a
+                style="
+                  font-size: {{ block.settings.font_size_contact }}px;
+                  color: {{ block.settings.color_contact }};
+                "
+                href="mailto:{{ block.settings.email }}"
+              >
+                {{- block.settings.email -}}
+              </a>
+            </p>
+          {% when 'connect_with_us' %}
+            <h4 class="footer-heading" style="color: {{ section.settings.color_heading }}">
+              {{ block.settings.heading }}
+            </h4>
+            <p class="connect-content" style="margin-top: {{ block.settings.connect_margin_top }}px">
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px"
+                href="{{ block.settings.instagram_url }}"
+              >
+                <strong>Instagram</strong>
+              </a>
+              -
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px"
+                href="{{ block.settings.instagram_url }}"
+              >
+                {{- block.settings.instagram_name -}}
+              </a>
+            </p>
+            <p class="connect-content">
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px"
+                href="{{ block.settings.facebook_url }}"
+              >
+                <strong>Facebook</strong>
+              </a>
+              -
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px"
+                href="{{ block.settings.facebook_url }}"
+              >
+                {{- block.settings.facebook_name -}}
+              </a>
+            </p>
+            <p class="connect-content">
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px"
+                href="{{ block.settings.facebook_group_url }}"
+              >
+                <strong>FB Group</strong>
+              </a>
+              -
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px"
+                href="{{ block.settings.facebook_group_url }}"
+              >
+                {{- block.settings.facebook_group_name -}}
+              </a>
+            </p>
+            <p class="connect-content">
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px"
+                href="{{ block.settings.facebook_group_url }}"
+              >
+                <strong>FB Group</strong>
+              </a>
+              -
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px"
+                href="{{ block.settings.facebook_group_url }}"
+              >
+                {{- block.settings.facebook_group_name -}}
+              </a>
+            </p>
+          {% when 'be_in_the_know' %}
+            <h4 class="footer-heading">{{ block.settings.heading }}</h4>
+            <p
+              class="know-heading"
+              style="font-size: {{block.settings.font_size_know }}px; color: {{ block.settings.color_know }}"
+            >
+              {{ block.settings.know_heading }}
+            </p>
+
+            {% form 'customer', class: 'know-form' %}
+              <input type="email" name="customer[email]" id="Email" placeholder="Your email address" required>
+              <input type="submit" class="btn" value="{{ block.settings.button_text }}">
+            {% endform %}
+        {% endcase %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+    .footer-column h4 {
+      font-size: {{section.settings.font_size_heading}}px;
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "range",
+      "id": "font_size_heading",
+      "label": "Heading Font Size",
+      "default": 20,
+      "min": 10,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "color",
+      "id": "color_heading",
+      "label": "Color",
+      "default": "#000"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "links",
+      "name": "Links",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Links"
+        },
+        {
+          "type": "color",
+          "id": "color_links",
+          "label": "Color",
+          "default": "#000"
+        },
+        {
+          "type": "range",
+          "id": "links_margin_top",
+          "label": "margin Top",
+          "default": 10,
+          "min": 0,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id": "links_padding_top",
+          "label": "Padding Top",
+          "default": 10,
+          "min": 0,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id": "links_padding_bottom",
+          "label": "Padding Bottom",
+          "default": 0,
+          "min": 0,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id": "font_size_links",
+          "label": "Links Font Size",
+          "default": 20,
+          "min": 10,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "link_list",
+          "id": "navigation",
+          "label": "Navigation",
+          "default": "main-menu"
+        }
+      ]
+    },
+    {
+      "type": "contact_us",
+      "name": "Contact Us",
+      "settings": [
+        {
+          "type": "color",
+          "id": "color_contact",
+          "label": "Color",
+          "default": "#000"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Contact Us"
+        },
+        {
+          "type": "range",
+          "id": "font_size_contact",
+          "label": "Contact Font Size",
+          "default": 20,
+          "min": 10,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id": "contact_margin_top",
+          "label": "Margin Top",
+          "default": 10,
+          "min": 0,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id": "contact_padding_bottom",
+          "label": "Padding Bottom",
+          "default": 0,
+          "min": 0,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "label": "Email",
+          "default": "contact@example.com"
+        }
+      ]
+    },
+    {
+      "type": "connect_with_us",
+      "name": "Connect with Us",
+      "settings": [
+        {
+          "type": "range",
+          "id": "font_size_with",
+          "label": "Font Size",
+          "default": 20,
+          "min": 10,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id": "connect_margin_top",
+          "label": "Margin Top",
+          "default": 10,
+          "min": 0,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Connect with Us"
+        },
+        {
+          "type": "url",
+          "id": "instagram_url",
+          "label": "Instagram URL",
+          "default": "/"
+        },
+        {
+          "type": "text",
+          "id": "instagram_name",
+          "label": "Instagram Name",
+          "default": "Instagram"
+        },
+        {
+          "type": "url",
+          "id": "facebook_url",
+          "label": "Facebook URL",
+          "default": "/"
+        },
+        {
+          "type": "text",
+          "id": "facebook_name",
+          "label": "Facebook Name",
+          "default": "Facebook"
+        },
+        {
+          "type": "url",
+          "id": "facebook_group_url",
+          "label": "Facebook Group URL",
+          "default": "/"
+        },
+        {
+          "type": "text",
+          "id": "facebook_group_name",
+          "label": "Facebook Group Name",
+          "default": "Facebook Group"
+        }
+      ]
+    },
+    {
+      "type": "be_in_the_know",
+      "name": "Be in the Know",
+      "settings": [
+        {
+          "type": "color",
+          "id": "color_know",
+          "label": "Color",
+          "default": "#000"
+        },
+        {
+          "type": "range",
+          "id": "font_size_know",
+          "label": "Font Size",
+          "default": 20,
+          "min": 10,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "text",
+          "id": "know_heading",
+          "label": "Heading",
+          "default": "Promotions, new products and sales. Directly to your inbox."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Be in the Know"
+        },
+        {
+          "type": "url",
+          "id": "form_action",
+          "label": "Form Action URL",
+          "default": "/"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Subscribe"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

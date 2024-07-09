@@ -1,0 +1,97 @@
+<div class="copyright-section">
+  <hr>
+  <div class="copyright-content">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'text' %}
+          <div
+            style="color: {{ block.settings.heading_color }}; font-size: {{ block.settings.heading_font_size }}px"
+            class="copyright-text"
+          >
+            {{ block.settings.text_content }}
+          </div>
+        {% when 'visa_images' %}
+          <div class="visa-images">
+            <img src="{{ block.settings.image | img_url: '100x' }}" alt="Visa Image">
+            <img src="{{ block.settings.image1 | img_url: '100x' }}" alt="Visa Image">
+            <img src="{{ block.settings.image2 | img_url: '100x' }}" alt="Visa Image">
+            <img src="{{ block.settings.image3 | img_url: '100x' }}" alt="Visa Image">
+            <img src="{{ block.settings.image4 | img_url: '100x' }}" alt="Visa Image">
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Copyright Section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text Block",
+      "settings": [
+        {
+          "type": "range",
+          "id": "heading_font_size",
+          "label": "Heading Font Size",
+          "default": 24,
+          "min": 10,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading Color",
+          "default": "#000000"
+        },
+        {
+          "type": "richtext",
+          "id": "text_content",
+          "label": "Text Content",
+          "default": "<p>&copy; 2024 Your Company. All rights reserved.</p>"
+        }
+      ]
+    },
+    {
+      "type": "visa_images",
+      "name": "Visa Images Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Visa Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image1",
+          "label": "Visa Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image2",
+          "label": "Visa Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image3",
+          "label": "Visa Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image4",
+          "label": "Visa Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Copyright",
+      "category": "Footer"
+    }
+  ]
+}
+{% endschema %}

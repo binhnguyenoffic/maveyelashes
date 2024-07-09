@@ -1,0 +1,412 @@
+{% schema %}
+{
+  "name": "Products Section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "links_padding_top_bottom",
+      "label": "Padding Top Bottom",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "links_padding_left_right",
+      "label": "Margin Right Left",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        },
+        {
+          "type": "range",
+          "id": "links_margin_left",
+          "label": "Margin Left",
+          "default": 30,
+          "min": 0,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id": "links_margin_top",
+          "label": "Margin top",
+          "default": 10,
+          "min": 0,
+          "max": 100,
+          "step": 1
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Products Section",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="products-section">
+  {% for block in section.blocks %}
+    {% assign product = all_products[block.settings.product] %}
+    <div class="product-section_content" style="margin-top: {{ block.settings.links_margin_top }}px">
+      <div class="product-block">
+        <img class="product-block_img" src="{{ product.featured_image | img_url: 'large' }}" alt="{{ product.title }}">
+      </div>
+      <div style="margin-left: {{ block.settings.links_margin_left }}px;" class="product-info">
+        <h1 class="product-info_title">{{ product.title }}</h1>
+        <p class="product-info_vendor">Kingdom Eyelashes</p>
+
+        <script>
+          //console.log({{product | json}})
+        </script>
+        {% form 'product', product %}
+          {% assign current_variant = product.selected_or_first_available_variant %}
+          <div class="product-price">
+            <span class="product-price__reg price-reg">{{ current_variant.price | money_without_trailing_zeros }}</span>
+            {% if current_variant.compare_at_price > current_variant.price %}
+              <span class="product-price__sale price-sale"
+                ><s>{{ current_variant.compare_at_price | money }}</s></span
+              >
+            {% endif %}
+          </div>
+          <p class="paragraph"><a href="#" class="text-link">Shipping</a> calculated at checkout.</p>
+          <p class="shopify-installments">
+            <span class="shopify-installments_content">
+              Pay in 4 interest-free installments for orders over
+              <b>$50.00</b>
+              with
+              <a
+                href="#"
+                class="shopify-installments_link"
+                >Learn more</a
+              >
+            </span>
+          </p>
+
+          <div class="product-options">
+            {% for option in product.options_with_values %}
+              <div class="product-options__item">
+                <label class="label">{{ option.name }}</label>
+                <select name="{{ option.name }}" class="select product-variant">
+                  {% for value in option.values %}
+                    <option
+                      value="{{ value }}"
+                      {% if option.selected_value == value %}
+                        selected
+                      {% endif %}
+                    >
+                      {{ value }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+            {% endfor %}
+            <div class="product-options__item">
+              <label class="label">Quantity</label>
+              <input class="input-text quantity" type="number" name="quantity" min="1" value="1">
+            </div>
+          </div>
+
+          <input type="hidden" name="id" class="variant-id" value="{{product.selected_or_first_available_variant.id}}">
+          <div class="product-submit">
+            <button class="button button--add-to-cart add-to-cart" type="submit">
+              {{ 'General.add_to_cart' | t }}
+            </button>
+            <div class="product-addcart_icon" style="display: none;">
+              <i class="fas fa-spinner fa-spin loading-icon"></i>
+            </div>
+            <a href="/cart" class="view-cart-btn" style="display: none;">View Cart</a>
+          </div>
+          <a href="{{  product.url }}" class="product-full__details"
+            >Full details <i class="fa-solid fa-arrow-right"></i
+          ></a>
+          <div class="product-icon">
+            <a href="#" class="product-icon_title"><i class="fa-brands fa-square-facebook"></i> Share</a>
+            <a href="#" class="product-icon_title"><i class="fa-brands fa-twitter"></i> Tweet</a>
+            <a href="#" class="product-icon_title"><i class="fa-brands fa-pinterest"></i> Pin it</a>
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+<script>
+  // console.log({{ product.variants | json }})
+
+  document.querySelectorAll('.product-section_content').forEach(section => {
+    var productVariants = {{ product.variants | json }};
+
+    // format the price
+    const formatMoney = number => number.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
+    // event for product variants change
+    section.querySelectorAll('select.product-variant').forEach(select => {
+      select.addEventListener('change', () => {
+        var selectedOption = [];
+
+        section.querySelectorAll('select.product-variant').forEach(select => {
+          selectedOption.push(select.value);
+        });
+
+        for (const [key, variant] of Object.entries(productVariants)) {
+          const options = variant.options;
+
+          let check = options.every((option, index) => {
+            return option == selectedOption[index];
+          });
+
+          if (check == true) {
+            section.querySelector(".variant-id").value = variant.id;
+
+            section.querySelectorAll(".price-reg").forEach(price => {
+              price.innerHTML = formatMoney(variant.price / 100);
+            });
+
+            section.querySelectorAll('.add-to-cart').forEach(button => {
+              button.innerHTML = '{{"General.add_to_cart" | t }}';
+              button.removeAttribute("disabled");
+            });
+
+            break;
+          }
+
+          if ((+key.slice(0, 1) + 1) == productVariants.length) {
+            section.querySelector(".variant-id").value = "";
+
+            section.querySelectorAll('.add-to-cart').forEach(button => {
+              button.innerHTML = 'Out Of Stock';
+              button.setAttribute("disabled", "disabled");
+            });
+          }
+        }
+      });
+    });
+
+    // event for add-to-cart
+    section.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener("click", async function (event) {
+        event.preventDefault();
+
+        const variantId = section.querySelector(".variant-id").value;
+        const quantity = section.querySelector(".quantity").value;
+
+        const formData = {
+          'items': [{
+            'id': variantId,
+            'quantity': quantity
+          }]
+        };
+
+        const loadingIcon = button.nextElementSibling;
+        const viewCartBtn = loadingIcon.nextElementSibling;
+
+        loadingIcon.style.display = 'inline-block'; // Hiện icon loading
+
+        try {
+          const res = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          }).then(response => response.json());
+
+          loadingIcon.style.display = 'none'; // Ẩn icon loading
+
+          if (res.status) {
+            // error
+            console.log(res);
+            button.style.display = 'inline-block'; // Hiện lại nút Add to Cart nếu lỗi
+          } else {
+            // success
+            console.log("Product added to cart successfully:", res);
+
+            const resCart = await fetch(window.Shopify.routes.root + 'cart.js', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }).then(response => response.json());
+
+            // update quantity of minicart
+            document.getElementById("CartCount").innerHTML = resCart.item_count;
+            viewCartBtn.style.display = 'block'; // Hiện nút View Cart khi thành công
+            button.style.display = 'none'; // Ẩn nút Add to Cart
+          }
+        } catch (error) {
+          console.error("Lỗi khi thêm sản phẩm vào giỏ hàng:", error);
+          loadingIcon.style.display = 'none'; // Ẩn icon loading
+          button.style.display = 'inline-block'; // Hiện lại nút Add to Cart nếu lỗi
+        }
+      });
+    });
+  });
+</script>
+<style>
+  .products-section {
+    padding: {{ section.settings.links_padding_top_bottom }}px {{ section.settings.links_padding_left_right }}px;
+  }
+  .product-section_content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+
+  .product-info_title {
+    font-weight: 300;
+    font-size: 32px;
+    margin: 0;
+  }
+  .product-info_vendor {
+    font-size: 19px;
+    margin: 0;
+  }
+  .product-price {
+    margin: 15px 0;
+    font-size: 19px;
+  }
+  .product-price__reg {
+    color: #c13121;
+  }
+  .product-price__sale {
+    margin-left: 6px;
+  }
+  .paragraph {
+    font-size: 18px;
+    margin: 0;
+  }
+  .text-link {
+    color: #c13121;
+    border-bottom: 1px solid;
+    text-decoration: none;
+  }
+  .shopify-installments_content {
+    font-size: 19px;
+  }
+  .shopify-installments_link {
+    color: #000;
+  }
+  .product-options__item {
+    display: inline-grid;
+  }
+  .product-options {
+    margin-bottom: 10px;
+  }
+  .label {
+    font-size: 15.2px;
+    margin-bottom: 3px;
+    cursor: pointer;
+  }
+  .product-variant {
+    padding: 10px;
+    outline: none;
+    border: none;
+    font-size: 16px;
+  }
+  .input-text {
+    width: 40px;
+    padding: 10px;
+    outline: none;
+    border: none;
+    font-size: 16px;
+  }
+  .product-submit {
+    position: relative;
+    margin: 15px 0;
+  }
+  .loading-icon {
+    display: inline-block;
+    margin-left: 10px;
+    left: 18%;
+    top: 30%;
+  }
+  .product-addcart_icon {
+    width: 40%;
+    position: absolute;
+    top: 4%;
+    padding: 10px 0px;
+    text-align: center;
+    color: #fff;
+    left: 0%;
+    background: #c13121;
+  }
+
+  .view-cart-btn {
+    width: 40%;
+    padding: 10px 15px;
+    background-color: transparent;
+    color: #c13121;
+    border: 2px solid #c13121;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+  }
+  .button--add-to-cart {
+    width: 40%;
+    padding: 10px 15px;
+    background-color: transparent;
+    color: #c13121;
+    border: 2px solid #c13121;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .product-full__details {
+    font-size: 19px;
+    text-decoration: none;
+    color: #c13121;
+  }
+  .product-icon {
+    margin: 15px 0;
+    display: flex;
+  }
+  .product-icon_title {
+    margin-right: 15px;
+    text-decoration: none;
+    color: #000;
+  }
+  .product-block_img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @media(max-width: 750px){
+    .product-section_content {
+      flex-direction: column;
+    }
+    .product-info {
+      margin-left: 0px !important;
+      text-align: center;
+    }
+    .product-icon {
+      justify-content: center;
+    }
+    .button--add-to-cart {
+      width: 100%;
+    }
+    .view-cart-btn{
+      width: 90%;
+    }
+    .product-addcart_icon{
+      width: 100%;
+    }
+  }
+</style>

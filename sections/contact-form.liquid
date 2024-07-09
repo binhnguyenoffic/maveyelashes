@@ -1,0 +1,465 @@
+<section class="contact-us">
+  <hr>
+  {% for block in section.blocks %}
+    <div class="container">
+      {% case block.type %}
+        {% when 'breadcumb' %}
+          <!-- Block 1: Breadcrumb -->
+          <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+            <ol class="breadcrumb-list">
+              <li
+                style="font-size: {{ block.settings.font_size_breadcumb }}px; color: {{ block.settings.text_color_breadcumb }}"
+                class="breadcrumb-item"
+              >
+                <a style="color: {{ block.settings.text_color_breadcumb }}" href="/">Home</a>
+              </li>
+              <li
+                style="font-size: {{ block.settings.font_size_breadcumb }}px; color: {{ block.settings.text_color_breadcumb }}"
+                class="breadcrumb-item"
+              >
+                <i class="fa-solid fa-angle-right"></i>
+              </li>
+              <li
+                style="font-size: {{ block.settings.font_size_breadcumb }}px; color: {{ block.settings.text_color_breadcumb }}"
+                class="breadcrumb-item active"
+                aria-current="page"
+              >
+                {{ page.title }}
+              </li>
+            </ol>
+          </nav>
+        {% when 'Title_heading' %}
+          <!-- Block 2: Title and Paragraph -->
+          <div class="title-and-description">
+            <{{ block.settings.heading_tag }}
+              style="font-size: {{ block.settings.font_size_heading }}px; color: {{ block.settings.text_color_heading }}"
+            >
+              {{- page.title -}}
+            </{{ block.settings.heading_tag }}>
+            <p style="font-size: {{ block.settings.font_size_heading1 }}px; color: {{ block.settings.text_color_heading }}">
+              {{ block.settings.heading_content }}
+            </p>
+          </div>
+        {% when 'contact_info' %}
+          <!-- Block 3: Contact Information -->
+          <div class="contact-info">
+            <p style="font-size: {{ block.settings.font_size_heading }}px;">
+              <strong> Email: </strong>
+              <a
+                style="color: {{ block.settings.text_color_heading }}; font-size: {{ block.settings.font_size_heading }}px; text-decoration: none;"
+                href="{{ block.settings.contact_suport }}"
+              >
+                {{- block.settings.contact_suport_name -}}
+              </a>
+              or
+              <a
+                style="
+                   color: {{ block.settings.text_color_heading }};
+                   font-size: {{ block.settings.font_size_heading }}px;
+                  text-decoration: none;
+                "
+                href="{{ block.settings.contact_info }}"
+              >
+                {{- block.settings.contact_info_name -}}
+              </a>
+            </p>
+            <p style="font-size: {{ block.settings.font_size_heading }}px;">
+              <strong>Phone: </strong> {{ block.settings.phone1 }} or {{ block.settings.phone2 }}
+            </p>
+            <p style="font-size: {{ block.settings.font_size_heading }}px;"><strong>Connect with us: </strong></p>
+            <p class="connect-content" style="margin-top: {{ block.settings.connect_margin_top }}px">
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px ; color: {{block.settings.text_color_with }}"
+                href="{{ block.settings.instagram_url }}"
+              >
+                <strong>Instagram</strong>
+              </a>
+              -
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px  ; color: {{block.settings.text_color_with }}"
+                href="{{ block.settings.instagram_url }}"
+              >
+                {{- block.settings.instagram_name -}}
+              </a>
+            </p>
+            <p class="connect-content">
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px; color: {{block.settings.text_color_with }}"
+                href="{{ block.settings.facebook_url }}"
+              >
+                <strong>Facebook</strong>
+              </a>
+              -
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px; color: {{block.settings.text_color_with }}"
+                href="{{ block.settings.facebook_url }}"
+              >
+                {{- block.settings.facebook_name -}}
+              </a>
+            </p>
+            <p class="connect-content">
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px; color: {{block.settings.text_color_with }}"
+                href="{{ block.settings.facebook_group_url }}"
+              >
+                <strong>FB Group</strong>
+              </a>
+              -
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px; color: {{block.settings.text_color_with }}"
+                href="{{ block.settings.facebook_group_url }}"
+              >
+                {{- block.settings.facebook_group_name -}}
+              </a>
+            </p>
+            <p class="connect-content">
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px; color: {{block.settings.text_color_with }}"
+                href="{{ block.settings.facebook_group_url }}"
+              >
+                <strong>FB Group</strong>
+              </a>
+              -
+              <a
+                class="connect-heading"
+                style="font-size: {{ block.settings.font_size_with }}px; color: {{block.settings.text_color_with }}"
+                href="{{ block.settings.facebook_group_url }}"
+              >
+                {{- block.settings.facebook_group_name -}}
+              </a>
+            </p>
+          </div>
+        {% when 'contact_form' %}
+          <!-- Block 4: Contact Form -->
+          <div class="contact-form">
+            <p style="font-size:{{ block.settings.font_size_contact-form }}px; color: {{ block.settings.text_color_with }}">
+              {{ block.settings.contact_form_name }}
+            </p>
+            {% form 'contact' %}
+              {{ form.errors | default_errors }}
+              <div class="form-blocks">
+                <div class="form-block" style="margin-bottom: 10px;">
+                  <input type="text" name="contact[name]" id="name" required placeholder="Name">
+                </div>
+                <div class="form-block" style="margin-bottom: 10px;">
+                  <input type="email" name="contact[email]" id="email" required placeholder="Email">
+                </div>
+                <div class="form-block" style="margin-bottom: 10px;">
+                  <input type="tel" name="contact[phone]" id="phone" required placeholder="Phone">
+                </div>
+                <div class="form-block" style="margin-bottom: 10px;">
+                  <textarea name="contact[body]" id="message" required placeholder="Message"></textarea>
+                </div>
+              </div>
+              <div class="form-block" style="margin-bottom: 10px;">
+                <input type="submit" value="Send" class="btn">
+              </div>
+            {% endform %}
+          </div>
+      {% endcase %}
+    </div>
+  {% endfor %}
+</section>
+
+<style>
+  .contact-us {
+    padding-top: {{ section.settings.links_padding_top }}px ;
+    padding-bottom: {{ section.settings.links_padding_bottom }}px ;
+    padding-left: {{ section.settings.links_padding_left }}px;
+    padding-right: {{ section.settings.links_padding_right}}px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Contact Us",
+  "settings": [
+    {
+      "type": "range",
+      "id": "links_padding_top",
+      "label": "Padding Top",
+      "default": 10,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "links_padding_bottom",
+      "label": "Padding Bottom",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "links_padding_left",
+      "label": "Padding left",
+      "default": 10,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "links_padding_right",
+      "label": "Padding Right",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    }
+  ],
+  "blocks": [
+    {
+      "type": "breadcumb",
+      "name": "Breadcrumb",
+      "settings": [
+        {
+          "type": "color",
+          "id": "text_color_breadcumb",
+          "label": "Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "font_size_breadcumb",
+          "label": "Heading Font Size",
+          "default": 20,
+          "min": 10,
+          "max": 100,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "type": "Title_heading",
+      "name": "Title and Heading ",
+      "settings": [
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "Heading Tag",
+          "default": "h1",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "heading_content",
+          "label": "Heading Content",
+          "default": "Welcome to Our Website"
+        },
+        {
+          "type": "color",
+          "id": "text_color_heading",
+          "label": "Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "font_size_heading",
+          "label": "Heading Font Size",
+          "default": 20,
+          "min": 10,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id": "font_size_heading1",
+          "label": "Heading1 Font Size",
+          "default": 20,
+          "min": 10,
+          "max": 100,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "type": "contact_info",
+      "name": "Contact Info",
+      "settings": [
+        {
+          "type": "color",
+          "id": "text_color_heading",
+          "label": "Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "font_size_heading",
+          "label": "Heading Font Size",
+          "default": 20,
+          "min": 10,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "type": "url",
+          "id": "contact_suport",
+          "label": "Contact Support",
+          "default": "/"
+        },
+        {
+          "type": "text",
+          "id": "contact_suport_name",
+          "label": "Contact Support Name",
+          "default": "support@kingdomlash.com"
+        },
+        {
+          "type": "url",
+          "id": "contact_info",
+          "label": "Contact Info",
+          "default": "/"
+        },
+        {
+          "type": "text",
+          "id": "contact_info_name",
+          "label": "Contact Info Name",
+          "default": "info@kingdomlash.com"
+        },
+        {
+          "type": "text",
+          "id": "phone1",
+          "label": "Phone number 1",
+          "default": "(512) 767-3571"
+        },
+        {
+          "type": "text",
+          "id": "phone2",
+          "label": "Phone number 2",
+          "default": "(929) 250-4284"
+        },
+        {
+          "type": "range",
+          "id": "font_size_with",
+          "label": "Font Size With",
+          "default": 20,
+          "min": 10,
+          "max": 100,
+          "step": 1
+        },
+
+        {
+          "type": "color",
+          "id": "text_color_with",
+          "label": "Text Color With",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "connect_margin_top",
+          "label": "Margin Top",
+          "default": 10,
+          "min": 0,
+          "max": 100,
+          "step": 1
+        },
+
+        {
+          "type": "url",
+          "id": "instagram_url",
+          "label": "Instagram URL",
+          "default": "/"
+        },
+        {
+          "type": "text",
+          "id": "instagram_name",
+          "label": "Instagram Name",
+          "default": "Instagram"
+        },
+        {
+          "type": "url",
+          "id": "facebook_url",
+          "label": "Facebook URL",
+          "default": "/"
+        },
+        {
+          "type": "text",
+          "id": "facebook_name",
+          "label": "Facebook Name",
+          "default": "Facebook"
+        },
+        {
+          "type": "url",
+          "id": "facebook_group_url",
+          "label": "Facebook Group URL",
+          "default": "/"
+        },
+        {
+          "type": "text",
+          "id": "facebook_group_name",
+          "label": "Facebook Group Name",
+          "default": "Facebook Group"
+        }
+      ]
+    },
+    {
+      "type": "contact_form",
+      "name": "Contact Form",
+      "settings": [
+        {
+          "type": "text",
+          "id": "contact_form_name",
+          "label": "Contact  Name",
+          "default": "You can also fill out the form below to send us a quick message:"
+        },
+        {
+          "type": "range",
+          "id": "font_size_contact-form",
+          "label": "Font Size Contact",
+          "default": 20,
+          "min": 10,
+          "max": 100,
+          "step": 1
+        },
+
+        {
+          "type": "color",
+          "id": "text_color_with",
+          "label": "Text Color With",
+          "default": "#000000"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Us"
+    }
+  ]
+}
+{% endschema %}
