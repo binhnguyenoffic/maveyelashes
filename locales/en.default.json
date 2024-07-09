@@ -1,0 +1,14 @@
+{
+    "General": {
+        "add_to_cart" : "Add to cart"
+    },
+    "Cart": {
+        "product" : "Product",
+        "price": "Price",
+        "quantity": "Quantity",
+        "total": "Total",
+        "continue_shopping": "Continue Shopping",
+        "checkout": "Checkout",
+        "subtotal": "Subtotal"
+    }
+} 

@@ -1,0 +1,55 @@
+
+{{ settings.body_font | font_face }}
+body{
+   background-color: {{ settings.bg }};
+    color: {{ settings.text_color }};
+    font-family: {{settings.body_font.family}};
+    font-size: 15px;
+    margin: 0px;
+}
+
+input::placeholder {
+  color: #000;
+  font-family: {{settings.body_font.family}};
+  font-size: 15px;
+}
+
+/* Homepage */
+.homepage-content--grid {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+ 
+}
+#shopify-section-navigation{
+  width: 20%;
+}
+#shopify-section-homepage{
+  width: 80%;
+}
+.homepage-content--layout{
+  width: 80%;
+}
+@media (max-width: 750px) {
+  #shopify-section-navigation {
+      width: 100%;
+  }
+  #shopify-section-homepage{
+    width: 100%;
+  }
+  .homepage-content--layout{
+    width: 100%;
+  }
+}
+.main-section {
+ max-width: {{ settings.page_width }}px;
+ margin: 0 auto;
+
+}
+@media (max-width: 750px){
+  .main-section{
+    padding: 0 10px;
+
+  }
+
+}

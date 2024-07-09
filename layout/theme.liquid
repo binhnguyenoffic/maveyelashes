@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ shop.name }}</title>
+    {{ content_for_header }}
+    {{ 'style.css' | asset_url | stylesheet_tag }}
+    {{ 'main.css' | asset_url | stylesheet_tag }}
+    {{ 'script.js' | asset_url | script_tag }}
+    <link rel="stylesheet" href="{{ 'photoswipe.css' | asset_url }}">
+    <script src="{{ 'photoswipe.umd.min.js' | asset_url }}"></script>
+    <script src="{{ 'photoswipe-lightbox.umd.min.js' | asset_url }}"></script>
+
+    {% comment %} font-awesome {% endcomment %}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    >
+    {% comment %} Slick carousel {% endcomment %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+    >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    {% comment %} Slick carousel {% endcomment %}
+  </head>
+  <body>
+    {% section 'announcement' %}
+    <div class="main-section">
+      {% section 'header' %}
+      <div class="homepage">
+        <div class="homepage-content homepage-content--grid">
+          {% section 'navigation' %}
+          <div class="homepage-content--layout">
+            {{ content_for_layout }}
+          </div>
+        </div>
+      </div>
+      {% section 'footer' %}
+      {% section 'copyright' %}
+    </div>
+  </body>
+  {% comment %} Slick carousel {% endcomment %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  {% comment %} Slick carousel {% endcomment %}
+</html>
+
+<script type="text/javascript">
+  $('.slideshow-container').each(function (index, element) {
+    var $carousel = $(element);
+    $carousel.slick({
+      dots: true,
+      appendDots: $carousel.siblings('.slider-item').find('.slider-dots'),
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 5000,
+      prevArrow: $carousel.siblings('.slider-item').find('.prev'),
+      nextArrow: $carousel.siblings('.slider-item').find('.next'),
+    });
+  });
+  $('.slider-pause').on('click', function () {
+    var $btn = $(this).find('i');
+    if ($btn.hasClass('fa-pause')) {
+      $('.slider').slick('slickPause');
+      $btn.removeClass('fa-pause').addClass('fa-play');
+    } else {
+      $('.slider').slick('slickPlay');
+      $btn.removeClass('fa-play').addClass('fa-pause');
+    }
+  });
+</script>

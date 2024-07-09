@@ -1,0 +1,63 @@
+[
+    {
+        "name": "Font family",
+        "settings": [
+            {
+                "type": "font_picker",
+                "id": "body_font",
+                "label": "Body font",
+                "default": "abel_n4"
+            }
+        ]
+    },
+    {
+        "name": "Range",
+        "settings": [
+            {
+                "type": "range",
+                "id": "page_width",
+                "label": "Page Width",
+                "default": 1200,
+                "min": 800,
+                "max": 1600,
+                "step": 100
+            }
+        ]
+    },
+    {
+        "name": "Color",
+        "settings": [
+            {
+                "type": "color",
+                "id": "bg",
+                "label": "Background color",
+                "default": "#fff"
+            },
+            {
+                "type": "color",
+                "id": "text_color",
+                "label": "Text color",
+                "default": "#000"
+            }
+        ]
+    },
+    {
+        "name": "Settings",
+        "settings": [
+            {
+                "type": "checkbox",
+                "id": "show_search",
+                "label": "show search form",
+                "default": true
+            }
+        ]
+    },
+    {
+        "name": "theme_info",
+        "theme_name": "Sunshine",
+        "theme_version": "1.0.0",
+        "theme_author": "Vu Tran",
+        "theme_documentation_url": "https://sunsetbossanova.myshopify.com/",
+        "theme_support_url": "https://sunsetbossanova.myshopify.com/"
+    }
+]
